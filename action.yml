@@ -1,0 +1,15 @@
+name: Bitbucket Sync
+description: Syncs the repository into bitbucket
+branding:
+  icon: check-circle
+  color: green
+runs:
+  using: docker
+  image: Dockerfile
+inputs:
+  repository:
+    description: The Repository URI
+    required: true
+  id_rsa:
+    description: Command(s) to run
+    required: true
