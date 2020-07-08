@@ -1,5 +1,8 @@
 #!/bin/bash
+set -x
 sudo su
+
+ls -la
 
 mkdir -p ~/.ssh
 echo "$INPUT_ID_RSA" > ~/.ssh/id_rsa
