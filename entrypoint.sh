@@ -1,14 +1,19 @@
 #!/bin/sh
 
-mkdir -p ~/.ssh
-echo "$INPUT_ID_RSA" > ~/.ssh/id_rsa
-chmod 600 ~/.ssh/id_rsa
+CLIENT_KEY="$INPUT_BITBUCKET_CLIENT_KEY"
+CLIENT_SECRET="$INPUT_BITBUCKET_CLIENT_SECRET"
 
-echo "
-Host bitbucket.org
-  IdentityFile ~/.ssh/id_rsa
-" >> ~/.ssh/config
+# Get Token
+ACCESS_TOKEN=$(
+    curl -X POST -u "$CLIENT_KEY:$CLIENT_SECRET" \
+        -d grant_type=client_credentials \
+        https://bitbucket.org/site/oauth2/access_token |\
+        jq -r .access_token
+)
 
-git remote set-url origin "$INPUT_REPOSITORY"
+[ -z "$ACCESS_TOKEN" ] && echo "Failed to authenticate with bitbucket. Please check the client key and secret." && exit 1
+
+
+git remote set-url origin "https://x-token-auth:$ACCESS_TOKEN@$INPUT_REPOSITORY"
 
 git push origin "$(git rev-parse --abbrev-ref HEAD)"
