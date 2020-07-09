@@ -4,13 +4,14 @@ Action for syncing the repo into bitbucket
 Example:
 ```
 jobs:
-  build:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - uses: speareducation/action-bitbucket-sync
+      - uses: speareducation/bitbucket-sync@master
         with:
-          id_rsa: ${{ secrets.BITBUCKET_RSA_KEY }}
-          repository: bitbucket.org:organization/project.git
+          repository: bitbucket.org/speareducation/patient
+          client_key: ${{ secrets.BITBUCKET_CLIENT_KEY }}
+          client_secret: ${{ secrets.BITBUCKET_CLIENT_SECRET }}
 ```
