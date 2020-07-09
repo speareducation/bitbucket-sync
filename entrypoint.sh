@@ -10,11 +10,16 @@ ACCESS_TOKEN=$(
 
 [ -z "$ACCESS_TOKEN" ] && echo "Failed to authenticate with bitbucket. Please check the client key and secret." && exit 1
 
+
+OLD_ORIGIN=$(git remote get-url origin)
+NEW_ORIGIN="https://x-token-auth:$ACCESS_TOKEN@$INPUT_REPOSITORY"
+
+git remote add old "$OLD_ORIGIN"
+git remote add new "$NEW_ORIGIN"
+
 # Make sure we fetch all commits
-git fetch --unshallow origin
+git fetch --unshallow old
 
-# Change the origin URL to bitbucket
-git remote set-url origin "https://x-token-auth:$ACCESS_TOKEN@$INPUT_REPOSITORY"
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-# Push the commits
-git push origin "$(git rev-parse --abbrev-ref HEAD)"
+git push new "$BRANCH"
