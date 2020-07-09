@@ -1,11 +1,8 @@
 #!/bin/sh
 
-CLIENT_KEY="$INPUT_BITBUCKET_CLIENT_KEY"
-CLIENT_SECRET="$INPUT_BITBUCKET_CLIENT_SECRET"
-
 # Get Token
 ACCESS_TOKEN=$(
-    curl -X POST -u "$CLIENT_KEY:$CLIENT_SECRET" \
+    curl -X POST -u "$INPUT_CLIENT_KEY:$INPUT_CLIENT_SECRET" \
         -d grant_type=client_credentials \
         https://bitbucket.org/site/oauth2/access_token |\
         jq -r .access_token

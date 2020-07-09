@@ -10,6 +10,7 @@ inputs:
   repository:
     description: The Repository URI
     required: true
-  id_rsa:
-    description: Command(s) to run
+  client_key:
+    required: true
+  client_secret:
     required: true
