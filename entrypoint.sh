@@ -22,4 +22,4 @@ git fetch --unshallow old
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-git push new "$BRANCH"
+git push --no-verify new "$BRANCH"
